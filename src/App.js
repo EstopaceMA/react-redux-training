@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { connect } from 'react-redux';
+import { Component } from 'react';
+import Home from './components/home';
+import Drawer from './components/common/Drawer';
+import Customers from './components/customers';
+import Settings from './components/settings';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// const App = () => {
+//   return (
+//     <div className="App">
+//       <Drawer/>
+//       <Home/>
+//     </div>
+//   );
+// }
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <Drawer/>
+        {this.props.drawer.activeForm === "Home" && <Home />}
+        {this.props.drawer.activeForm === "Customers" && <Customers />}
+        {this.props.drawer.activeForm === "Settings" && <Settings />}
+      </div>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  drawer: state.drawer
+});
+
+export default connect(mapStateToProps, {})(App);
